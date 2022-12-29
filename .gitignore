@@ -1,6 +1,7 @@
 .vsocde
 *.zip
 *.tmp
+*.dtmp
 ~*
 *.bkp
 
