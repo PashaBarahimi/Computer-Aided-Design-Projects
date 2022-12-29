@@ -6,7 +6,7 @@ module CounterModN (clk, rst, clr, en, q, co);
     output [Bits-1:0] q;
     output co;
 
-    reg [N-1:0] q;
+    reg [Bits-1:0] q;
 
     always @(posedge clk or posedge rst) begin
         if (rst || clr || co)
