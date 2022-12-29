@@ -9,10 +9,14 @@ module CounterModN (clk, rst, clr, en, q, co);
     reg [Bits-1:0] q;
 
     always @(posedge clk or posedge rst) begin
-        if (rst || clr || co)
+        if (rst || clr)
             q <= {Bits{1'b0}};
-        else if (en)
-            q <= q + 1;
+        else if (en) begin
+            if (co)
+                q <= {Bits{1'b0}};
+            else
+                q <= q + 1;
+        end
     end
 
     assign co = (q == N - 1);

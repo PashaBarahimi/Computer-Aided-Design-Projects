@@ -29,8 +29,8 @@ module PermutationController (clk, rst, start, cntCo,
             Init:    cntClr = 1'b1;
             Request: putInput = 1'b1;
             Load:    {ldReg, selRes} = 2'b10;
-            Write:   {ldReg, selRes, cntEn} = 3'b111;
-            Inform:  outReady = 1'b1;
+            Write:   {ldReg, selRes} = 2'b11;
+            Inform:  {outReady, cntEn} = 2'b11;
             default:;
         endcase
     end
