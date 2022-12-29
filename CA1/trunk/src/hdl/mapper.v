@@ -1,7 +1,7 @@
 module Mapper (in, out);
     parameter N = 5;
     localparam InputLenBitCount = $clog2(N*N);
-    localparam nHalf = N[0] ? ((N / 2) + 1) : N / 2;
+    localparam HalfN = N[0] ? ((N / 2) + 1) : N / 2;
 
     input [(N*N)-1:0] in;
     output [(N*N)-1:0] out;
@@ -12,8 +12,8 @@ module Mapper (in, out);
 
         begin: index2DTo1DBlock
             reg [InputLenBitCount-1:0] row, col;
-            row = (j + N - nHalf) % N;
-            col = (i + N - nHalf) % N;
+            row = (j + N - HalfN) % N;
+            col = (i + N - HalfN) % N;
             index2DTo1D = row * N + col;
         end
     endfunction
