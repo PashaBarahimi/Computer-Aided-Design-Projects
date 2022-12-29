@@ -2,6 +2,7 @@
 *.zip
 *.tmp
 ~*
+*.bkp
 
 # Modelsim files
 *.wlf
