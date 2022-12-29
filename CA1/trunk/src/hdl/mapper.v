@@ -1,15 +1,10 @@
 module Mapper (in, out);
     parameter N = 5;
-    parameter M = 5;
-    parameter InputLenBitCount = 5;
+    localparam InputLenBitCount = $clog2(N*N);
+    localparam nHalf = N[0] ? ((N / 2) + 1) : N / 2;
 
-    input [(N*M)-1:0] in;
-    output [(N*M)-1:0] out;
-
-    reg [(N*M)-1:0] out;
-
-    reg [InputLenBitCount-1:0] nHalf = N % 2 ? ((N / 2) + 1) : N / 2;
-    reg [InputLenBitCount-1:0] mHalf = M % 2 ? ((M / 2) + 1) : M / 2;
+    input [(N*N)-1:0] in;
+    output [(N*N)-1:0] out;
 
     function [InputLenBitCount-1:0] index2DTo1D;
         input [InputLenBitCount-1:0] i;
@@ -18,8 +13,8 @@ module Mapper (in, out);
         begin: index2DTo1DBlock
             reg [InputLenBitCount-1:0] row, col;
             row = (j + N - nHalf) % N;
-            col = (i + M - mHalf) % M;
-            index2DTo1D = row * M + col;
+            col = (i + N - nHalf) % N;
+            index2DTo1D = row * N + col;
         end
     endfunction
 
@@ -27,19 +22,17 @@ module Mapper (in, out);
         input [InputLenBitCount-1:0] i;
         input [InputLenBitCount-1:0] j;
 
-        begin: findDstBlock
-            reg [InputLenBitCount-1:0] jDst;
-            jDst = (2 * i + 3 * j) % N;
-            findDst = index2DTo1D(j, jDst);
+        begin
+            findDst = index2DTo1D(j, (2 * i + 3 * j) % N);
         end
     endfunction
 
-    always @(in, out) begin: mapper
-        reg [InputLenBitCount-1:0] i, j;
-        for (i = 0; i < M; i = i + 1) begin
+    genvar i, j;
+    generate
+        for (i = 0; i < N; i = i + 1) begin
             for (j = 0; j < N; j = j + 1) begin
-                out[findDst(i, j)] = in[index2DTo1D(i, j)];
+                assign out[findDst(i, j)] = in[index2DTo1D(i, j)];
             end
         end
-    end
+    endgenerate
 endmodule
