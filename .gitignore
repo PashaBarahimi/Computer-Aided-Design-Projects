@@ -2,3 +2,10 @@
 *.zip
 *.tmp
 ~*
+
+# Modelsim files
+*.wlf
+*.mti
+*.mpf
+transcript
+work

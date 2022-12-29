@@ -15,10 +15,10 @@ module Mapper (in, out);
         input [InputLenBitCount-1:0] i;
         input [InputLenBitCount-1:0] j;
 
-        begin: index2DTo1D
+        begin: index2DTo1DBlock
             reg [InputLenBitCount-1:0] row, col;
-            row = (i + N - nHalf) % N;
-            col = (j + M - mHalf) % M;
+            row = (j + N - nHalf) % N;
+            col = (i + M - mHalf) % M;
             index2DTo1D = row * M + col;
         end
     endfunction
@@ -27,17 +27,17 @@ module Mapper (in, out);
         input [InputLenBitCount-1:0] i;
         input [InputLenBitCount-1:0] j;
 
-        begin: findDst
+        begin: findDstBlock
             reg [InputLenBitCount-1:0] jDst;
-            jDst = (2 * i + 3 * j) % M;
+            jDst = (2 * i + 3 * j) % N;
             findDst = index2DTo1D(j, jDst);
         end
     endfunction
 
     always @(in, out) begin: mapper
         reg [InputLenBitCount-1:0] i, j;
-        for (i = 0; i < N; i = i + 1) begin
-            for (j = 0; j < M; j = j + 1) begin
+        for (i = 0; i < M; i = i + 1) begin
+            for (j = 0; j < N; j = j + 1) begin
                 out[findDst(i, j)] = in[index2DTo1D(i, j)];
             end
         end
