@@ -41,7 +41,7 @@ module MainController (clk, rst, start, adrSrc, regSrc,
             Load:        nstate = ParityCalc;
             ParityCalc:  nstate = colCntCo == 0 ? ParityCalc : Xor;
             Xor:         nstate = matCntCo == 0 ? Xor : Write;
-            Write:       nstate = pageCntCo == 0 ? Write : Inform;
+            Write:       nstate = pageCntCo == 0 ? Request : LdFirstPage;
             LdFirstPage: nstate = ParityCalc1;
             ParityCalc1: nstate = colCntCo == 0 ? ParityCalc1 : Xor1;
             Xor1:        nstate = matCntCo == 0 ? Xor1 : Write1;

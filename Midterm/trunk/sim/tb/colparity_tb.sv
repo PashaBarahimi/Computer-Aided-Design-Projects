@@ -42,20 +42,21 @@ module ColParityTB;
             fdOut = $fopen(filenameOut, "w");
 
             while (!ready) #CLK;
-            start = 2'b01;
+            start = 1'b1;
             while (ready) #CLK;
             start = 1'b0;
 
             for (int m = 0; m < Count && !$feof(fdInp); ++m) begin
                 while (!putInput) #CLK;
                 $fscanf(fdInp, "%b", matrixIn);
+                #(2 * CLK);
             end
 
             while (!outReady) #CLK;
             #(2 * CLK + 1);
 
             for (int m = 0; m < Count; ++m) begin
-                $fdisplay(fdOut, "%b", matrixOut[m]);
+                $fdisplay(fdOut, "%b", matrixOut);
                 #(2 * CLK);
             end
 
