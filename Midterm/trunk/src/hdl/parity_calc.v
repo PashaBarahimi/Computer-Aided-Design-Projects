@@ -58,7 +58,7 @@ module ParityCalc(clk, rst, xorSrc, regInp,
     );
 
     Mux5to1 #(1) muxPrev(
-        .sel(colNum),
+        .sel((colNum + 4) % 5),
         .a0(PDParOut[0]),
         .a1(PDParOut[1]),
         .a2(PDParOut[2]),
@@ -68,7 +68,7 @@ module ParityCalc(clk, rst, xorSrc, regInp,
     );
 
     Mux5to1 #(1) muxCurr(
-        .sel(colNum),
+        .sel((colNum + 1) % 5),
         .a0(colPar[0]),
         .a1(colPar[1]),
         .a2(colPar[2]),
