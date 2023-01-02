@@ -54,15 +54,15 @@ module MainController (clk, rst, start, adrSrc, regSrc,
 
     always @(pstate) begin
         {ready, putInput, outReady} = 3'd0;
-        {pageCntClr, regClr, colRegClr, colCntClr, PDParClr, matCntClr} = 3'd0;
+        {pageCntClr, regClr, colRegClr, colCntClr, PDParClr, matCntClr} = 6'd0;
         {regLd, adrSrc, regSrc, memRead} = 4'd0;
-        {colCntEn, colRegShR, xorSrc} = 2'd0;
+        {colCntEn, colRegShR, xorSrc} = 3'd0;
         {matCntEn, regShfR} = 2'd0;
         {memWrite, pageCntEn, PDParLd} = 3'd0;
         case (pstate)
             Idle:        ready = 1'b1;
-            Init:        pageCntClr = 1'b1;
-            Request:     {putInput, regClr, colRegClr, colCntClr, PDParClr, matCntClr} = 6'b11_1111;
+            Init:        {pageCntClr, PDParClr} = 2'b11;
+            Request:     {putInput, regClr, colRegClr, colCntClr, matCntClr} = 5'b1_1111;
             Load:        regLd = 1'b1;
             ParityCalc:  {colCntEn, colRegShR} = 2'b11;
             Xor:         {matCntEn, regShfR} = 2'b11;
