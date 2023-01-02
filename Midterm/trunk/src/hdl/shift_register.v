@@ -13,6 +13,6 @@ module ShiftRegister(clk, rst, clr, ld, shf, serIn, din, dout);
         else if (ld)
             dout <= din;
         else if (shf)
-            dout <= {serIn, dout[N-2:0]};
+            dout <= {serIn, dout[N-1:1]};
     end
 endmodule

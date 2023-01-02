@@ -27,7 +27,7 @@ module MainController (clk, rst, start, adrSrc, regSrc,
     output reg xorSrc, matCntEn, matCntClr;
     output reg colCntEn, colCntClr, colRegShR, colRegClr;
     output reg PDParLd, PDParClr;
-    output reg matCntCo, colCntCo, pageCntCo;
+    input matCntCo, colCntCo, pageCntCo;
     output reg ready, putInput, outReady;
 
     reg [3:0] pstate, nstate;
@@ -56,7 +56,7 @@ module MainController (clk, rst, start, adrSrc, regSrc,
         {ready, putInput, outReady} = 3'd0;
         {pageCntClr, regClr, colRegClr, colCntClr, PDParClr, matCntClr} = 3'd0;
         {regLd, adrSrc, regSrc, memRead} = 4'd0;
-        {colCntEn, colRegShR} = 2'd0;
+        {colCntEn, colRegShR, xorSrc} = 2'd0;
         {matCntEn, regShfR} = 2'd0;
         {memWrite, pageCntEn, PDParLd} = 3'd0;
         case (pstate)
