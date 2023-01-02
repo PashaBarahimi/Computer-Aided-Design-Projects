@@ -12,7 +12,18 @@ set run_time			"-all"
 
 #============================ Add verilog files  ===============================
 
-vlog 	+acc -incr -source  +define+SIM 	$hdl_path/<file_name>.v
+vlog 	+acc -incr -source  +define+SIM 	$hdl_path/adder.v
+vlog 	+acc -incr -source  +define+SIM 	$hdl_path/colparity_calc.v
+vlog 	+acc -incr -source  +define+SIM 	$hdl_path/counter_modn.v
+vlog 	+acc -incr -source  +define+SIM 	$hdl_path/five_bit_selector.v
+vlog 	+acc -incr -source  +define+SIM 	$hdl_path/main_controller.v
+vlog 	+acc -incr -source  +define+SIM 	$hdl_path/main_datapath.v
+vlog 	+acc -incr -source  +define+SIM 	$hdl_path/main.v
+vlog 	+acc -incr -source  +define+SIM 	$hdl_path/memory.v
+vlog 	+acc -incr -source  +define+SIM 	$hdl_path/mux.v
+vlog 	+acc -incr -source  +define+SIM 	$hdl_path/parity_calc.v
+vlog 	+acc -incr -source  +define+SIM 	$hdl_path/register.v
+vlog 	+acc -incr -source  +define+SIM 	$hdl_path/shift_register.v
 
 vlog 	+acc -incr -source  +incdir+$inc_path +define+SIM ./tb/colparity_tb.sv
 onerror {break}

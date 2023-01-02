@@ -2,13 +2,14 @@
 
 module ColParityTB;
     parameter CLK = 5;
+    parameter Count = 64;
 
     string testFolder = "file";
 
     logic clk, rst, start;
-    logic [(N*N)-1:0] matrixIn;
+    logic [24:0] matrixIn;
     wire ready, putInput, outReady;
-    wire [(N*N)-1:0] matrixOut;
+    wire [24:0] matrixOut;
 
     Main main(
         .clk(clk),
