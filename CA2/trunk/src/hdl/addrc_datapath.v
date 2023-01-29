@@ -10,7 +10,7 @@ module AddRcDatapath (clk, rst, in, cycleNum, sliceCntEn, sliceCntClr, ldReg, cl
 
     wire [5:0] sliceCnt;
     wire [24:0] regIn, regOut;
-    wire [63:0] currRcValue;
+    wire [0:63] currRcValue;
     reg [63:0] rcValues [0:23];
 
     initial $readmemh("rc.hex", rcValues);
