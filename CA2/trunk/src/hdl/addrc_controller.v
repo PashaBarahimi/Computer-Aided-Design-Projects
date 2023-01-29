@@ -1,13 +1,14 @@
 module AddRcController (clk, rst, start, sliceCntCo, sliceCntEn, sliceCntClr, ldReg, clrReg, ready, putInput);
-    localparam Idle  = 2'b00,
-               Init  = 2'b01,
-               Start = 2'b10,
-               Calc  = 2'b11;
+    localparam Idle  = 3'b000,
+               Init  = 3'b001,
+               Start = 3'b010,
+               Calc  = 3'b011,
+               Res   = 3'b100;
 
     input clk, rst, start, sliceCntCo;
     output reg sliceCntEn, sliceCntClr, ldReg, clrReg, ready, putInput;
 
-    reg [1:0] pstate, nstate;
+    reg [2:0] pstate, nstate;
 
     always @(pstate or start or sliceCntCo) begin
         nstate = Idle;
@@ -15,7 +16,8 @@ module AddRcController (clk, rst, start, sliceCntCo, sliceCntEn, sliceCntClr, ld
             Idle:  nstate = start ? Init : Idle;
             Init:  nstate = Start;
             Start: nstate = Calc;
-            Calc:  nstate = sliceCntCo ? Init : Calc;
+            Calc:  nstate = Res;
+            Res:   nstate = sliceCntCo ? Idle : Calc;
             default:;
         endcase
     end
@@ -26,7 +28,8 @@ module AddRcController (clk, rst, start, sliceCntCo, sliceCntEn, sliceCntClr, ld
             Idle:  ready = 1'b1;
             Init:  {sliceCntClr, clrReg} = 2'b11;
             Start: putInput = 1'b1;
-            Calc:  {sliceCntEn, ldReg} = 2'b11;
+            Calc:  ldReg = 1'b1;
+            Res:   sliceCntEn = 1'b1;
             default:;
         endcase
     end

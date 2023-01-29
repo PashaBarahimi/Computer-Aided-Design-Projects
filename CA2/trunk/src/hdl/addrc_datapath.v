@@ -9,17 +9,16 @@ module AddRcDatapath (clk, rst, in, cycleNum, sliceCntEn, sliceCntClr, ldReg, cl
     output [24:0] out;
 
     wire [5:0] sliceCnt;
-    wire [24:0] regIn;
-    wire [24:0] regOut;
-    wire [63:0] currCoeff;
-    reg [63:0] coeff [0:23];
+    wire [24:0] regIn, regOut;
+    wire [63:0] currRcValue;
+    reg [63:0] rcValues [0:23];
 
-    initial $readmemh("rc.hex", coeff);
+    initial $readmemh("rc.hex", rcValues);
 
-    Register #(.N(25)) reg(.clk(clk), .rst(rst), .clr(clrReg), .ld(ldReg), .din(regIn), .dout(regOut));
-    CounterModN #(.N(6)) sliceNum(.clk(clk), .rst(rst), .clr(sliceCntClr), .en(sliceCntEn), .q(sliceCnt), .co(sliceCntCo));
+    Register #(.N(25)) outReg(.clk(clk), .rst(rst), .clr(clrReg), .ld(ldReg), .din(regIn), .dout(regOut));
+    CounterModN #(.N(64)) sliceNum(.clk(clk), .rst(rst), .clr(sliceCntClr), .en(sliceCntEn), .q(sliceCnt), .co(sliceCntCo));
 
-    assign currCoeff = coeff[cycleNum];
+    assign currRcValue = rcValues[cycleNum];
     assign out = regOut;
-    assign regIn = {in[24:13], in[12] ^ currCoeff[sliceCnt], in[11:0]};
+    assign regIn = {in[24:13], in[12] ^ currRcValue[sliceCnt], in[11:0]};
 endmodule
