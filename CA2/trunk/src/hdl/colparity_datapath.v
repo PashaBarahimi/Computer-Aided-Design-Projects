@@ -4,14 +4,14 @@
 `include "memory.v"
 `include "parity_calc.v"
 
-module MainDatapath (clk, rst, adrSrc, regSrc, matrixIn,
-                     sliceCntEn, sliceCntClr, memRead, memWrite,
-                     regLd, regClr, regShfR,
-                     xorSrc, matCntEn, matCntClr,
-                     colCntEn, colCntClr, colRegShR, colRegClr,
-                     PDParLd, PDParClr,
-                     matCntCo, colCntCo,
-                     sliceCntCo, matrixOut);
+module ColParityDatapath (clk, rst, adrSrc, regSrc, matrixIn,
+                          sliceCntEn, sliceCntClr, memRead, memWrite,
+                          regLd, regClr, regShfR,
+                          xorSrc, matCntEn, matCntClr,
+                          colCntEn, colCntClr, colRegShR, colRegClr,
+                          PDParLd, PDParClr,
+                          matCntCo, colCntCo,
+                          sliceCntCo, matrixOut);
     parameter Count = 64;
     localparam CntBits = $clog2(Count);
 
