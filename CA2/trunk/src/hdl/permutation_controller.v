@@ -1,23 +1,25 @@
 module PermutationController (clk, rst, start, cntCo,
                               ready, ldReg, cntEn, cntClr, putInput, selRes);
-    localparam Idle = 2'b00,
-               Init = 2'b01,
-               Load = 2'b10,
-               Res  = 2'b11;
+    localparam Idle  = 3'b000,
+               Init  = 3'b001,
+               Load  = 3'b010,
+               Res   = 3'b011,
+               Count = 3'b100;
 
     input clk, rst, start, cntCo;
     output ready, ldReg, cntEn, cntClr, putInput, selRes;
 
     reg ready, ldReg, cntEn, cntClr, putInput, selRes;
-    reg [1:0] pstate, nstate;
+    reg [2:0] pstate, nstate;
 
     always @(pstate or start or cntCo) begin
         nstate = Idle;
         case (pstate)
-            Idle:    nstate = start ? Init : Idle;
-            Init:    nstate = Load;
-            Load:    nstate = Res;
-            Res:     nstate = cntCo ? Idle : Load;
+            Idle:  nstate = start ? Init : Idle;
+            Init:  nstate = Load;
+            Load:  nstate = Res;
+            Res:   nstate = Count;
+            Count: nstate = cntCo ? Idle : Load;
             default:;
         endcase
     end
@@ -25,10 +27,11 @@ module PermutationController (clk, rst, start, cntCo,
     always @(pstate) begin
         {ready, ldReg, cntEn, cntClr, putInput, selRes} = 6'd0;
         case (pstate)
-            Idle:    ready = 1'b1;
-            Init:    {cntClr, putInput} = 2'b11;
-            Load:    {ldReg, selRes} = 2'b10;
-            Res:     {ldReg, selRes, cntEn} = 3'b111;
+            Idle:  ready = 1'b1;
+            Init:  {cntClr, putInput} = 2'b11;
+            Load:  {ldReg, selRes} = 2'b10;
+            Res:   {ldReg, selRes} = 2'b11;
+            Count: cntEn = 1'b1;
             default:;
         endcase
     end

@@ -20,10 +20,10 @@ module RevaluateDatapath (clk, rst, in, ldReg, clrReg, rowCntEn, rowCntClr, colC
     Register #(.N(25)) inputReg(.clk(clk), .rst(rst), .clr(clrReg), .ld(ldReg), .din(in), .dout(rows));
     ShiftRegister #(.N(25)) outReg(.clk(clk), .rst(rst), .clr(clrOut), .ld(1'b0), .shR(1'b0), .shL(shL), .serIn(serIn), .din(25'b0), .dout(out));
 
-    Mux5to1 #(.N(5)) rowSelector(.sel(rowCnt), .a0(rows[24:20]), .a1(rows[19:15]), .a2(rows[14:10]), .a3(rows[9:5]), .a4(rows[4:0]), .out(row));
-    Mux5to1 #(.N(1)) mux0(.sel(colCnt), .a0(row[4]), .a1(row[3]), .a2(row[2]), .a3(row[1]), .a4(row[0]), .out(mux0Out));
-    Mux5to1 #(.N(1)) mux1(.sel(colCnt), .a0(row[3]), .a1(row[2]), .a2(row[1]), .a3(row[0]), .a4(row[4]), .out(mux1Out));
-    Mux5to1 #(.N(1)) mux2(.sel(colCnt), .a0(row[2]), .a1(row[1]), .a2(row[0]), .a3(row[4]), .a4(row[3]), .out(mux2Out));
+    Mux8to1 #(.N(5)) rowSelector(.sel(rowCnt), .a0(rows[24:20]), .a1(rows[19:15]), .a2(rows[14:10]), .a3(rows[9:5]), .a4(rows[4:0]), .out(row));
+    Mux8to1 #(.N(1)) mux0(.sel(colCnt), .a0(row[4]), .a1(row[3]), .a2(row[2]), .a3(row[1]), .a4(row[0]), .out(mux0Out));
+    Mux8to1 #(.N(1)) mux1(.sel(colCnt), .a0(row[3]), .a1(row[2]), .a2(row[1]), .a3(row[0]), .a4(row[4]), .out(mux1Out));
+    Mux8to1 #(.N(1)) mux2(.sel(colCnt), .a0(row[2]), .a1(row[1]), .a2(row[0]), .a3(row[4]), .a4(row[3]), .out(mux2Out));
 
     assign serIn = (~mux1Out & mux2Out) ^ mux0Out;
 endmodule
