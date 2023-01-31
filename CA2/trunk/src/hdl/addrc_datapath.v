@@ -13,7 +13,7 @@ module AddRcDatapath (clk, rst, in, cycleNum, sliceCntEn, sliceCntClr, ldReg, cl
     wire [0:63] currRcValue;
     reg [63:0] rcValues [0:23];
 
-    initial $readmemh("rc.hex", rcValues);
+    initial $readmemh("files/rc.hex", rcValues);
 
     Register #(.N(25)) outReg(.clk(clk), .rst(rst), .clr(clrReg), .ld(ldReg), .din(regIn), .dout(regOut));
     CounterModN #(.N(64)) sliceNum(.clk(clk), .rst(rst), .clr(sliceCntClr), .en(sliceCntEn), .q(sliceCnt), .co(sliceCntCo));
