@@ -17,6 +17,7 @@ vlog 	+acc -incr -source  +define+SIM 	$hdl_path/addrc_controller.v
 vlog 	+acc -incr -source  +define+SIM 	$hdl_path/addrc_datapath.v
 vlog 	+acc -incr -source  +define+SIM 	$hdl_path/addrc_datapath.v
 vlog 	+acc -incr -source  +define+SIM 	$hdl_path/addrc.v
+vlog 	+acc -incr -source  +define+SIM 	$hdl_path/bit_changer.v
 vlog 	+acc -incr -source  +define+SIM 	$hdl_path/colparity_calc.v
 vlog 	+acc -incr -source  +define+SIM 	$hdl_path/colparity_controller.v
 vlog 	+acc -incr -source  +define+SIM 	$hdl_path/colparity_datapath.v
@@ -29,6 +30,7 @@ vlog 	+acc -incr -source  +define+SIM 	$hdl_path/five_bit_selector.v
 vlog 	+acc -incr -source  +define+SIM 	$hdl_path/mapper.v
 vlog 	+acc -incr -source  +define+SIM 	$hdl_path/matrix_mult.v
 vlog 	+acc -incr -source  +define+SIM 	$hdl_path/memory.v
+vlog 	+acc -incr -source  +define+SIM 	$hdl_path/multiplier.v
 vlog 	+acc -incr -source  +define+SIM 	$hdl_path/mux.v
 vlog 	+acc -incr -source  +define+SIM 	$hdl_path/parity_calc.v
 vlog 	+acc -incr -source  +define+SIM 	$hdl_path/permutation_controller.v

@@ -9,7 +9,7 @@ module Memory (clk, rst, clr, read, write, adr, din, dout);
     output [N-1:0] dout;
 
     reg [N-1:0] dout;
-    reg [N-1:0] mem [0:Size];
+    reg [N-1:0] mem [0:Size-1];
 
     integer i;
 
