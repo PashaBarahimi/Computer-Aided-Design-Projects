@@ -41,14 +41,14 @@ module EncoderTB;
             fdOut = $fopen(filenameOut, "w");
 
             while (!ready) #CLK;
-            start = 2'b01;
+            start = 1'b1;
             while (ready) #CLK;
             start = 1'b0;
 
             while (!putInput) #CLK;
             #(2*CLK);
 
-            for (int m = 0; m < Count && !$feof(fdInp); ++m) begin
+            for (int m = 0; m < 64 && !$feof(fdInp); ++m) begin
                 $fscanf(fdInp, "%b", matrixIn);
                 #(2*CLK);
             end
@@ -56,7 +56,7 @@ module EncoderTB;
             while (!outReady) #CLK;
             #(2*CLK);
 
-            for (int m = 0; m < Count && !$feof(fdInp); ++m) begin
+            for (int m = 0; m < 64 && !$feof(fdInp); ++m) begin
                 $fdisplay(fdOut, "%b", matrixOut);
                 #(2*CLK);
             end

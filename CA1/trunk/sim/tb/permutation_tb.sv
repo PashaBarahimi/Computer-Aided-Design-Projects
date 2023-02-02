@@ -43,7 +43,7 @@ module PermutationTB;
             fdOut = $fopen(filenameOut, "w");
 
             while (!ready) #CLK;
-            start = 2'b01;
+            start = 1'b1;
             while (ready) #CLK;
             start = 1'b0;
 

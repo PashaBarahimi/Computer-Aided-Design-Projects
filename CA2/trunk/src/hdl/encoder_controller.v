@@ -103,7 +103,7 @@ module EncoderController (clk, rst, start, sliceCntCo, cycleCntCo, colReady, col
             ResAdd     : begin {memWrite, sliceCntEn} = 2'b11; memSrc = 3'd5; end
             CycleCnt   : cycleCntEn = 1'b1;
             Inform     : {sliceCntClr, outReady} = 2'b11;
-            Result     : sliceCntEn = 1'b1;
+            Result     : {memRead, sliceCntEn} = 2'b11;
             default:;
         endcase
     end
