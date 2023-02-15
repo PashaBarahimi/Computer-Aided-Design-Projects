@@ -1,8 +1,21 @@
-# Computer-Aided-Design-Projects
+# Computer Aided Design Projects
+
+- [Computer Aided Design Projects](#computer-aided-design-projects)
+  - [Introduction](#introduction)
+  - [CA1: Permutation](#ca1-permutation)
+  - [Midterm: ColParity](#midterm-colparity)
+  - [CA2: Encoder](#ca2-encoder)
+    - [ColParity](#colparity)
+    - [Rotate](#rotate)
+    - [Permute](#permute)
+    - [Revaluate](#revaluate)
+    - [AddRc](#addrc)
 
 ## Introduction
 
-The following projects are used for encoding a $5\times 5\times 64$ matrix. The output is also a $5\times 5\times 64$ matrix. The $(i,\ j)$ indices for matrix are as follows:
+In all of the projects, a $5\times 5\times 64$ matrix is encoded to another $5\times 5\times 64$ matrix using different methods.  
+The encodings are implemented completely in hardware.  
+The $(i,\ j)$ indices for a matrix slice are as follows:
 
 <table>
     <tr>
@@ -44,47 +57,53 @@ The following projects are used for encoding a $5\times 5\times 64$ matrix. The 
 
 ## CA1: Permutation
 
-In this part, the encoding is done by the following formula:
+In this part, the encoding is done using the following formula:
 
 $$\forall i,\ j \in [0,4]\ \forall k \in [0, 63]: a[i][j][k] = a[j][(2i+3j)\ \%\ 5][k]$$
 
+This means that in each slice, the bits are mapped to a different location in the slice.
+
 ## Midterm: ColParity
 
-In this part, the encoding is done by the following formula:
+In this part, the encoding is done using the following formula:
 
 $$\forall i,\ j \in [0,4]\ \forall k \in [0, 63]: a[i][j][k] = a[i][j][k] \oplus a[(i-1)\ \%\ 5][0..4][k] \oplus a[(i+1)\ \%\ 5][0..4][(k+1)\ \%\ 64]$$
 
+This means that each bit of the matrix becomes the XOR of itself, the bit's left column, and its right column in the previous slice.
+
 ## CA2: Encoder
 
-This project focuses on the encoding of the matrix using the following formulas:
+Here, 5 different encodings are applied serially to the input 24 times.
 
 ### ColParity
 
-This part is the same as the [Midterm](#midterm-colparity).
+This part is the same function implemented in [Midterm](#midterm-colparity).
 
 ### Rotate
 
-In this part, the encoding is done using the following formula:
+The following formula is used for encoding:
 
 $$\forall i,\ j \in [0,4]\ \forall k \in [0, 63]: a[i][j][k] = a[i][j][(k-\frac{(t+1)(t+2)}{2})\ \%\ 64]$$
 
-Where $t$ is calculated by the following formula:
+The number $t$ starts from 0 and goes up to 23. On each increment, an $(x,\ y)$ pair is calculated using the following formula:
 
 $$\begin{pmatrix} 0 & 1 \\ 2 & 3\end{pmatrix}^t\begin{pmatrix} 1 \\ 0\end{pmatrix} \mod 5 = \begin{pmatrix} x \\ y\end{pmatrix}$$
 
+The $(x,\ y)$ pair shows which lane of the matrix should be shifted $\frac{(t+1)(t+2)}{2}$ times.
+
 ### Permute
 
-This part is the same as the [CA1](#ca1-permutation).
+This part is the same function implemented in [CA1](#ca1-permutation).
 
 ### Revaluate
 
-In this part, the encoding is done using the following formula:
+The following formula is used for encoding:
 
 $$\forall i,\ j \in [0,4]\ \forall k \in [0, 63]: a[i][j][k] = a[i][j][k] \oplus (\lnot a[(i+1)\ \%\ 5][j][k]\ \&\ a[(i+2)\ \%\ 5][j][k])$$
 
 ### AddRc
 
-In this part, the encoded matrix can be calculated as follows:
+The following formula is used for encoding:
 
 $$\forall k \in [0,\ 63]: a[0][0][k] = a[0][0][k] \oplus RC[t][k]$$
 
@@ -165,4 +184,4 @@ Where the $RC$ values are presented in the following table:
     </tr>
 </table>
 
-And $t$ is the iteration number where the function is being executed. The encoder function is executed for 24 times and after that, the output is generated.
+And $t$ is the iteration number where the function is being executed. (the encoder module executes the 5 functions 24 times)
